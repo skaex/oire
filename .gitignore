@@ -28,3 +28,6 @@ __pycache__
 # virtual environments
 .env
 
+# Sqlite DB
+*.sqlite
+
