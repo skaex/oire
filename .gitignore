@@ -29,7 +29,10 @@ __pycache__
 .env
 
 # Sqlite DB
-
-*.sqlite3
 *.sqlite3
 
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+htmlcov
