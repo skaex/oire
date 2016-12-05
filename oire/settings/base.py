@@ -35,19 +35,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< 3f43f1c9184fa38548ab173197bee5a2c524d2b4
-||||||| merged common ancestors
-
-    # Custom apps
-    'accounts',
-=======
 
     # Custom apps
     'accounts',
 
     # Django admin
     'django.contrib.admin',
->>>>>>> Add auth views
+
 ]
 
 MIDDLEWARE = [
