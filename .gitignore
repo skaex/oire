@@ -29,6 +29,7 @@ __pycache__
 .env
 
 # Sqlite DB
+
 *.sqlite3
 
 # Unit test / coverage reports
@@ -36,5 +37,3 @@ __pycache__
 .tox
 nosetests.xml
 htmlcov
-
-
