@@ -1,0 +1,5 @@
+[run]
+include = oire/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
