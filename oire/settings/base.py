@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     'accounts',
+    'courses',
 
     # Django admin
     'django.contrib.admin',
