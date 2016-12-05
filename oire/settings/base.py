@@ -35,11 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-
     # Custom apps
     'accounts',
-
     # Django admin
     'django.contrib.admin',
 
