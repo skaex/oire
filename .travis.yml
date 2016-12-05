@@ -1,0 +1,8 @@
+sudo: true
+before_install:
+  - cp env.example oire/settings/.env
+language: python
+python:
+  - "3.4"
+install: "pip install -r requirements/development.txt"
+script: python manage.py test
