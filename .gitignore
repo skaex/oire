@@ -29,7 +29,6 @@ __pycache__
 .env
 
 # Sqlite DB
-
 *.sqlite3
 
 # Unit test / coverage reports
