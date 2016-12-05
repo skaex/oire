@@ -7,4 +7,4 @@ python:
 install: "pip install -r requirements/development.txt"
 script: python manage.py test
 after_success:
-  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  - codecov
