@@ -31,3 +31,10 @@ __pycache__
 # Sqlite DB
 *.sqlite3
 
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+htmlcov
+
+
