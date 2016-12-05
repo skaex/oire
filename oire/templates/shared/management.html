@@ -1,0 +1,23 @@
+{% extends "shared/base.html" %}
+{% load navigation %}
+{% block title %}Management | FCE{% endblock %}
+{% block content %}
+<div class="container">
+{% include "shared/messages.html" %}
+	<div class="page-header">
+        <h4 id="buttons">Management | {% block page %} {% endblock %} </h4>
+    </div>
+	<div class="row">
+		<div class="col-md-2">
+			<ul class="nav nav-pills nav-stacked text-right">
+
+			  <li role="presentation" class="{% active 'users' %}"><a href="{% url 'user_list' %}">Users</a></li>
+
+			</ul>
+		</div>
+		<div class="col-md-10">
+		{% block pagecontent %} {% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}
