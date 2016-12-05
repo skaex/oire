@@ -29,5 +29,7 @@ __pycache__
 .env
 
 # Sqlite DB
+
+*.sqlite3
 *.sqlite3
 
