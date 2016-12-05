@@ -1,3 +1,2 @@
-from django.db import models
-
-# Create your models here.
+DEFAULT_USER_PASSWORD = "fcevaluation"
+TESTING_PASSWORD = 'password'

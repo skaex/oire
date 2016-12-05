@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import password_validation
+from django.contrib.auth.models import User
 
 
 class OireAuthenticationForm(AuthenticationForm):
@@ -18,7 +19,7 @@ class OireAuthenticationForm(AuthenticationForm):
 
 class OirePasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
-        label=("Old password"),
+        label="Old password",
         strip=False,
         widget=forms.PasswordInput(attrs={
             'autofocus': '',
@@ -26,28 +27,29 @@ class OirePasswordChangeForm(PasswordChangeForm):
         }),
     )
     new_password1 = forms.CharField(
-        label=("New password"),
+        label="New password",
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
-        label=("New password confirmation"),
+        label="New password confirmation",
         strip=False,
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
 
 
 class OirePasswordResetForm(PasswordResetForm):
-    email = forms.EmailField(label=("AUN Email"), max_length=254, widget=forms.fields.EmailInput(attrs={
+    email = forms.EmailField(label="AUN Email", max_length=254, widget=forms.fields.EmailInput(attrs={
         'placeholder': 'e.g ****@aun.edu.ng',
         'class': 'form-control',
         'autofocus': ''
     }))
 
+
 class OireSetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(
-        label=("New password"),
+        label="New password",
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'autofocus': ''
@@ -56,9 +58,42 @@ class OireSetPasswordForm(SetPasswordForm):
         help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
-        label=("New password confirmation"),
+        label="New password confirmation",
         strip=False,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control'
         }),
     )
+
+
+class UserAddForm(forms.models.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'groups')
+        widgets = {
+            'first_name': forms.fields.TextInput(attrs={
+                'placeholder': 'Enter a first name',
+                'class': 'form-control',
+            }),
+            'last_name': forms.fields.TextInput(attrs={
+                'placeholder': 'Enter a last name',
+                'class': 'form-control',
+            }),
+            'email': forms.fields.EmailInput(attrs={
+                'placeholder': 'Enter an email',
+                'class': 'form-control',
+            }),
+            'groups': forms.fields.SelectMultiple(attrs={
+                'class': 'form-control',
+            }),
+
+        }
+
+
+class UserEditForm(forms.models.ModelForm):
+    class Meta(UserAddForm.Meta):
+        fields = UserAddForm.Meta.fields + ('user_permissions', 'is_active')
+        widgets = UserAddForm.Meta.widgets
+        widgets['user_permissions'] = forms.fields.SelectMultiple(attrs={
+            'class': 'form-control',
+        })
