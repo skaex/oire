@@ -1,0 +1,33 @@
+{% extends "shared/management.html" %}
+{% block page %}Courses{% endblock %}
+{% block pagecontent %}
+<div class="pull-right">
+<a href="{% url 'new_course' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add course</a>
+</div>
+<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>Course Code</th>
+		<th>School</th>
+		<th>Course Title</th>
+		<th>Description</th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+	   {% for course in object_list %}
+         <tr>
+           <td>{{ course.code }}</td>
+           <td>{{ course.school }}</td>
+           <td>{{ course.title }}</td>
+           <td>{{ course.description }}</td>
+           <td><a href="{% url 'course_edit' course.id %}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+           <!-- <td><a href="{% url 'course_delete' course.id %}" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td> -->
+  		 </tr>
+       {% endfor %}
+	<tbody>
+
+	</tbody>
+</table>
+    {% include "shared/pagination.html" %}
+{% endblock %}
