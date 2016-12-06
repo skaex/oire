@@ -1,6 +1,3 @@
 [run]
-include = ./*
+include = oire/*
 omit = *migrations*, *tests*
-
-[html]
-directory = htmlcov
