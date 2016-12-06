@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 import environ
+from django.core.urlresolvers import reverse_lazy
 
 # Set up the environ
 env = environ.Env()
@@ -19,7 +20,8 @@ env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+ROOT_DIR = environ.Path(__file__) - 3
+SHARED_DIR = ROOT_DIR.path('oire')
 
 
 ALLOWED_HOSTS = []
@@ -28,12 +30,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Custom apps
+    'accounts',
+    'courses',
+    'sections',
+
+    # Django admin
+    'django.contrib.admin',
+
 ]
 
 MIDDLEWARE = [
@@ -51,7 +60,9 @@ ROOT_URLCONF = 'oire.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            str(SHARED_DIR.path('templates'))
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,3 +126,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+STATICFILES_DIRS = (
+    str(SHARED_DIR.path('static')),
+)
+
+# Auth URLs
+LOGIN_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('login')
+
+# Tweaking Auth Backend
+AUTHENTICATION_BACKENDS = (
+    'accounts.authentication.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
