@@ -1,4 +1,6 @@
 ## OIRE
+[![Build Status](https://travis-ci.org/SkaeX/oire.svg?branch=develop)](https://travis-ci.org/SkaeX/oire)
+
 This is a project made up of applications for the American University of Nigeria Office of Institutional Research and Effectiveness.
 The project was initiated to replace the existing paper-driven activities by the university's office of institutional research and effectiveness to save on costs and be more environmentally friendly.
 
@@ -14,7 +16,7 @@ To set up this project on a machine *(for preview)*, you will need to:
 
 1. Ensure Python 3.4.x is installed on your machine.
 2. (Optional) You may want to create a separate ``virtualenv``
-3. Download and Unzip or clone the project.
+3. Download and unzip or clone the project.
 4. ``cd`` into the project directory.
 3. Install the requirements with
     * ``pip install -r requirements/development.txt``
