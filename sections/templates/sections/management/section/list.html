@@ -1,0 +1,55 @@
+{% extends "shared/management.html" %}
+{% load statustags %}
+{% block page %}Sections{% endblock %}
+{% block pagecontent %}
+<div class="pull-right">
+<a href="{% url 'new_section' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add section</a>
+</div>
+<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>CRN</th>
+		<th>Course</th>
+		<th>Class Time</th>
+		<th>Location</th>
+		<th>Enrolled</th>
+		<th>Semester</th>
+		<th>Instructor(s)</th>
+		<th>Status</th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+	   {% for section in object_list %}
+         <tr>
+           <td>{{ section.crn }}</td>
+           <td><a type="button" href="{% url 'course_edit' section.course.id %}" class="btn btn-info btn-xs">{{ section.course }}</a></td>
+           <td>{{ section.time }}</td>
+           <td>{{ section.location }}</td>
+           <td>{{ section.enrolled }}</td>
+           <td>{{ section.semester }}</td>
+           <td>
+           {% for instructor in section.instructors.all %}
+           	<a href="{% url 'user_edit' instructor.id %}" type="button" class="btn btn-primary btn-xs">{{ instructor.first_name }} {{ instructor.last_name }}</a><br>
+           {% endfor %}
+           </td>
+           <td>
+           	{% autoescape off %}{% status section.get_status_display section.semester.id section.id %}{% endautoescape %}
+            </td>
+           {% if section.key_set.all %}
+           <td><a href="{% url 'key_section_list' section.id %}"><span class="glyphicon glyphicon-option-horizontal"></span></a></td>
+           {% else %}
+           <td></td>
+           {% endif %}
+
+           <td><a href="{% url 'section_edit' section.id %}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+           <!-- <td><a href="{% url 'section_delete' section.id %}" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td> -->
+
+  		 </tr>
+       {% endfor %}
+	<tbody>
+
+	</tbody>
+</table>
+    {% include "shared/pagination.html" %}
+{% endblock %}
