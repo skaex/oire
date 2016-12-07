@@ -1,0 +1,41 @@
+{% extends "shared/base.html" %}
+{% load reports %}
+{% block title %}Reports | FCE{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="page-header">
+        <h4 id="buttons">Reports</h4>
+    </div>
+    {% autoescape off %}{% reports_tabs %} {% endautoescape %}
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>CRN</th>
+				<th>Course code</th>
+				<th>Course title</th>
+				<th>Class time</th>
+				<th>Semester</th>
+				<th>Report(s)</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for section in object_list %}
+			<tr>
+				<td>{{ section.crn }}</td>
+				<td>{{ section.course.code }}</td>
+				<td>{{ section.course.title }}</td>
+				<td>{{ section.time }}</td>
+				<td>{{ section.semester }}</td>
+				<td>
+				{% for evaluation in section.semester.evaluation_set.all %}
+					{% autoescape off %}{% there_is_report evaluation section %}{% endautoescape %}
+					<br>
+				{% endfor %}
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+    {% include "shared/pagination.html" %}
+</div>
+{% endblock %}

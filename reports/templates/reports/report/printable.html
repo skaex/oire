@@ -1,0 +1,99 @@
+{% extends "shared/skeleton.html" %}
+{% load staticfiles %}
+{% load reports %}
+{% block title %}Report | {{ section.crn }}{% endblock %}
+{% block content %}
+<div style="font-family:courier" class="container">
+    <img src="{% static 'img/header.jpg' %}">
+    <h6 style="text-align:center"><strong>Faculty Course Evaluation Report ({{ evaluation.name }})</strong></h6>
+</div>
+    <div style="font-family:courier" class="container-fluid">
+		<div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align:right; font-size:70%">
+				CRN:<br>
+				Course Code:<br>
+				Course Title:<br>
+				Report:<br>
+				Instructor(s):<br>
+				Total Enrolled:<br>
+				Total Evaluation(s):<br>
+				Scale:<br>
+			</div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align:left; font-size:70%">
+				{{ section.crn }}<br>
+				{{ section.course.code }}<br>
+				{{ section.course.title }}<br>
+				{{ evaluation.name }} Report<br>
+                {% for instructor in section.instructors.all %}
+                    {{ instructor.first_name }} {{ instructor.last_name }}{% if forloop.last %}.{% else %}, {% endif %}
+                {% endfor %}
+				<br>
+				{{ section.enrolled }}<br>
+				{% total_responses responses %}<br>
+				5 (excellent), 4 (very good), 3 (good), 2 (margin), 1 (poor)
+			</div>
+        </div>
+    <div class="table-responsive" style="font-size:60%">
+        {% for category in evaluation.question_set.category_set.all %}
+		  <table class="table table-condensed">
+		  	<thead>
+		  		<tr>
+
+		  			<th>{{ category.name }}</th>
+		  			<th>1</th>
+		  			<th>2</th>
+		  			<th>3</th>
+		  			<th>4</th>
+		  			<th>5</th>
+		  			<th>Average</th>
+		  		</tr>
+		  	</thead>
+              <tbody>
+    		{% for question in category.category_questions.all %}
+    		<tr>
+    			<td><b>{{ question.title }}</b>: {{ question.description }}</td>
+                {% for response in responses %}
+                    {% ifequal response.question question %}
+                        <td>{{ response.one }}</td>
+                        <td>{{ response.two }}</td>
+                        <td>{{ response.three }}</td>
+                        <td>{{ response.four }}</td>
+                        <td>{{ response.five }}</td>
+                        <td>{% response_average response %}</td>
+                    {% endifequal %}
+                {% endfor %}
+    		</tr>
+    		{% endfor %}
+            <tr>
+                <td></td>
+                <td class="text-right" colspan="4">{{ category.name }} on average:</td>
+                <td></td>
+                <td>{% category_average category responses %}</td>
+            </tr>
+            {% if forloop.last %}
+              <tr>
+		  			<td><strong>Total Average</strong></td>
+		  			<td></td>
+		  			<td></td>
+		  			<td></td>
+		  			<td></td>
+		  			<td></td>
+		  			<td><strong>{% total_average evaluation responses %}</strong></td>
+		  		</tr>
+              {% endif %}
+    	</tbody>
+          </table>
+    {% endfor %}
+    </div>
+    <br><br><br><br><br>
+		<div style="font-size:60%">
+		<strong>Student Comments</strong>
+		<ul>
+			{% for comment in comments %}
+                <li>{{ comment }}</li>
+            {% endfor %}
+		</ul>
+		<div>
+    </div>
+
+{% endblock %}

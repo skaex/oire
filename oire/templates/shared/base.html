@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <title>{% block title %} FCE {% endblock %}</title>
 </head>
@@ -10,7 +10,7 @@
 <div class="navbar navbar-default navbar-fixed-top" >
   <div class="container">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand"><small class="hidden-xs">Office of Institutional Research Effectiveness</small><small class="visible-xs">OIRE</small></a>
+      <a href="{% url 'evaluate' %}" class="navbar-brand"><small class="hidden-xs">Faculty Course Evaluation</small><small class="visible-xs">FCE</small></a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -19,9 +19,13 @@
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav navbar-right">
+        <!-- <li><a href="#" target="_blank" class="disabled">Inquiries</a></li> -->
         {% if request.user.is_authenticated %}
 
-        <li><a href="#"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Home</a></li>
+        <li><a href="{% url 'report_list' %}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Home</a></li>
+        {% ifequal request.user.groups.all.0.name "Administrator" %}
+        <li><a href="{% url 'section_list' %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Management</a></li>
+        {% endifequal %}
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ request.user.first_name }} {{ request.user.last_name }} <span class="caret"></span></a>
           <ul class="dropdown-menu" aria-labelledby="user">

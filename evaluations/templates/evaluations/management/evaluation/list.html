@@ -21,7 +21,7 @@
            <td>{{ evaluation.name }}</td>
            <td><a href="{% url 'semester_edit' evaluation.semester.id %}" type="button" class="btn btn-primary btn-xs">{{ evaluation.semester }}</a></td>
            <td><a href="{% url 'questionset_edit' evaluation.question_set.id %}" type="button" class="btn btn-primary btn-xs">{{ evaluation.question_set }}</td>
-           <td>{% statuslink evaluation.status evaluation.id %}</td>
+          {% autoescape off %} <td>{% statuslink evaluation.status evaluation.id %}</td> {% endautoescape %}
            <td> {% if evaluation.special %}
              <span class="label label-info">Special</span>
              {% endif %}

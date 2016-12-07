@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'courses',
     'sections',
     'evaluations',
+    'reports',
 
     # Django admin
     'django.contrib.admin',
@@ -135,10 +136,12 @@ STATICFILES_DIRS = (
 
 # Auth URLs
 LOGIN_URL = reverse_lazy('login')
-LOGIN_REDIRECT_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('report_list')
 
 # Tweaking Auth Backend
 AUTHENTICATION_BACKENDS = (
     'accounts.authentication.EmailAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
