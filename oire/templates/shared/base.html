@@ -22,7 +22,7 @@
         <!-- <li><a href="#" target="_blank" class="disabled">Inquiries</a></li> -->
         {% if request.user.is_authenticated %}
 
-        <li><a href="{% url 'report_list' %}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Home</a></li>
+        <li><a href="{% url 'report_list' %}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reports</a></li>
         {% ifequal request.user.groups.all.0.name "Administrator" %}
         <li><a href="{% url 'section_list' %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Management</a></li>
         {% endifequal %}
