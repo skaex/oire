@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'courses/css/bootstrap.css' %}">
+{#    <link rel="stylesheet" href="{% static 'courses/css/main.css' %}">#}
+    <title>{% block title %} FCE {% endblock %}</title>
+</head>
+<body>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+    <script src="{% static 'courses/js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script src="{% static 'courses/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'courses/js/vendor/bootswatch.js' %}"></script>
+    <script src="{% static 'courses/js/main.js' %}"></script>
+    {% block jscripts %}{% endblock %}
+</body>
+</html>

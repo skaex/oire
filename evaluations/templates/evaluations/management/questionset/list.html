@@ -1,0 +1,52 @@
+{% extends "shared/management.html" %}
+{% block page %}Question Sets{% endblock %}
+{% block pagecontent %}
+<div class="pull-right">
+<a href="{% url 'new_questionset' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Question Set</a>
+<a href="{% url 'new_category' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category</a>
+<a href="{% url 'new_question' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Question</a>
+</div>
+<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>Question Set</th>
+		<th></th>
+    <th></th>
+    <th></th>
+	</tr>
+	</thead>
+	   {% for questionset in object_list %}
+         <tr>
+           <td>{{ questionset.name }}</td>
+           <td>
+           <table class="table table-hover">
+             <tbody>
+      
+                {% for category in questionset.category_set.all %}
+                <tr>
+                  <td><a href="{% url 'category_edit' category.id %}" type="button" class="btn btn-primary btn-xs">{{ category.name }}</a><br></td>
+                  <td>
+                  {%for question in category.category_questions.all %}
+                   <a href="{% url 'question_edit' question.id %}" ><span class="label label-default">
+                    {{ question.order }}.
+                    ({{ question.title }})
+                    {{ question.description }}
+                    </span></a><br>
+                  {% endfor %}
+                  </td>
+                </tr>
+                {% endfor %}
+                
+             </tbody>
+           </table>
+           </td>
+           
+           <td><a href="{% url 'questionset_edit' questionset.id %}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+  		 </tr>
+       {% endfor %}
+	<tbody>
+		
+	</tbody>
+</table>
+    {% include "shared/pagination.html" %}
+{% endblock %}

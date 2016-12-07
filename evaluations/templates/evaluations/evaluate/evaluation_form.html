@@ -1,0 +1,138 @@
+{% extends "shared/skeleton.html" %}
+{% block title %}{{ key.section.crn }}'s keys | FCE{% endblock %}
+{% load key %}
+{% block content %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Evaluation Disclaimer</h4>
+      </div>
+      <div class="modal-body">
+        <p>All information provided here is anonymous. It cannot be traced back to you. If the instructor intimidates/threatens you on this or any evaluation, Please mail us at <mark><b>oire@aun.edu.ng</b></mark></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Got it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-info">
+			  <div class="panel-body">
+			    <table class="table table-condensed">
+			    	<tbody>
+			    		<tr>
+			    			<td>Section</td>
+			    			<td>{{ key.section.course }}</td>
+			    		</tr>
+			    		<tr>
+			    			<td>Location</td>
+			    			<td>{{ key.section.location }}</td>
+			    		</tr>
+			    		<tr>
+			    			<td>Time</td>
+			    			<td>{{ key.section.time }}</td>
+			    		</tr>
+			    		<tr>
+			    			<td>Instructor(s)</td>
+			    			<td>
+			    				{% for instructor in key.section.instructors.all %}
+					           	<span class="label label-primary">{{ instructor.first_name }} {{ instructor.last_name }}</span>
+					           {% endfor %}
+			    			</td>
+			    		</tr>
+                        <tr>
+                            <td>Scale</td>
+                            <td><table style="font-size: 70%" class="table table-condensed">
+                                <tbody>
+                                <tr>
+                                    <td>5:</td>
+                                    <td>Excellent (exceptional, exemplary)</td>
+                                </tr>
+                                <tr>
+                                    <td>4:</td>
+                                    <td>Very good (high quality, better than average)</td>
+                                </tr>
+                                <tr>
+                                    <td>3:</td>
+                                    <td>Good (reasonable well done, acceptable)</td>
+                                </tr>
+                                <tr>
+                                    <td>2:</td>
+                                    <td>Margin (slightly below average, needs improvement)</td>
+                                </tr>
+                                <tr>
+                                    <td>1:</td>
+                                    <td>Poor (far below average, not acceptable)</td>
+                                </tr>
+                                </tbody>
+                            </table></td>
+                        </tr>
+			    	</tbody>
+			    </table>
+			  </div>
+			</div>
+    	</div>
+    </div>
+    <form method="POST" action="{% url 'submit_evaluation' key.section.id %}">
+    {% csrf_token %}
+    {% for category in categories %}
+    <input type="hidden" name="key" value="{{ key.value }}">
+    <table class="table table-condensed">
+    	<thead>
+    		<tr>
+    			<th>{{ category.name }}</th>
+    			<th>1</th>
+    			<th>2</th>
+    			<th>3</th>
+    			<th>4</th>
+    			<th>5</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for question in category.category_questions.all %}
+    		<tr>
+    			<td><b>{{ question.title }}</b>: {{ question.description }}</td>
+    			<td>
+		            <input type="radio" name="question_{{question.id}}" id="question_{{ question.id }}" 
+		            value="one" required>
+    			</td>
+    			<td>
+    				<input type="radio" name="question_{{question.id}}" id="question_{{ question.id }}" 
+    				value="two" required>
+    			</td>
+    			<td>
+    				<input type="radio" name="question_{{question.id}}" id="question_{{ question.id }}" 
+    				value="three" required>
+    			</td>
+    			<td>
+    				<input type="radio" name="question_{{question.id}}" id="question_{{ question.id }}" 
+    				value="four" required>
+    			</td>
+    			<td>
+    				<input type="radio" name="question_{{question.id}}" id="question_{{ question.id }}" 
+    				value="five" required>
+    			</td>
+    		</tr>
+    		{% endfor %}
+    	</tbody>
+    </table>
+    {% endfor %}
+    <b>Comments:</b> <textarea name="comment" class="form-control" placeholder="Please leave any comments, complaints, etc."></textarea>
+    <br>
+    <button type="submit" class="btn btn-primary">I'm done</button>
+    </form>
+</div>
+{% endblock %}
+{% block jscripts %}
+<script>
+ $(function() {
+        $('#myModal').modal('show');
+    });
+</script>
+{% endblock %}
