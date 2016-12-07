@@ -1,5 +1,6 @@
 ## OIRE
 [![Build Status](https://travis-ci.org/SkaeX/oire.svg?branch=develop)](https://travis-ci.org/SkaeX/oire)
+[![codecov](https://codecov.io/gh/SkaeX/oire/branch/develop/graph/badge.svg)](https://codecov.io/gh/SkaeX/oire)
 
 This is a project made up of applications for the American University of Nigeria Office of Institutional Research and Effectiveness.
 The project was initiated to replace the existing paper-driven activities by the university's office of institutional research and effectiveness to save on costs and be more environmentally friendly.
