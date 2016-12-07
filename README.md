@@ -18,4 +18,4 @@ Abdulmajid Hamza
 
 ## License
 
-Creative Commons (Attribution-NonCommercial-NoDerivs 3.0 Unported)
+Creative Commons [(CC-NC-ND)](https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode)
