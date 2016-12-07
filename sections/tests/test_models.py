@@ -24,7 +24,6 @@ class SemesterModelTest(TestCase):
 
     def test_duplicate_semesters_are_not_allowed(self):
         semester_1 = self.factory.create()
-        semester_1.save()
         with self.assertRaises(ValidationError):
             semester_2 = Semester(season=semester_1.season, year=semester_1.year)
             semester_2.full_clean()

@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from .models import QuestionSet, Evaluation, Question, Category, Key
 from .forms import QuestionSetForm, EvaluationForm, CategoryForm, QuestionForm, EvaluateForm
@@ -22,16 +22,19 @@ class QuestionSetEditMixin(QuestionSetMixin):
     success_url = reverse_lazy('questionset_list')
 
 
-class QuestionSetListView(QuestionSetMixin, ListView):
+class QuestionSetListView(PermissionRequiredMixin, QuestionSetMixin, ListView):
+    permission_required = 'evaluations.change_questionset'
     template_name = 'evaluations/management/questionset/list.html'
     paginate_by = 10
 
 
-class QuestionSetAddView(QuestionSetEditMixin, CreateView):
+class QuestionSetAddView(PermissionRequiredMixin, QuestionSetEditMixin, CreateView):
+    permission_required = 'evaluations.add_questionset'
     success_message = "%(name)s was created successfully"
 
 
-class QuestionSetUpdateView(QuestionSetEditMixin, UpdateView):
+class QuestionSetUpdateView(PermissionRequiredMixin, QuestionSetEditMixin, UpdateView):
+    permission_required = 'evaluations.change_questionset'
     success_message = "%(name)s was updated successfully"
 
 
@@ -45,20 +48,24 @@ class EvaluationEditMixin(EvaluationMixin):
     success_url = reverse_lazy('evaluation_list')
 
 
-class EvaluationListView(EvaluationMixin, ListView):
+class EvaluationListView(PermissionRequiredMixin, EvaluationMixin, ListView):
+    permission_required = 'evaluations.change_evaluation'
     template_name = 'evaluations/management/evaluation/list.html'
     paginate_by = 10
 
 
-class EvaluationAddView(EvaluationEditMixin, CreateView):
+class EvaluationAddView(PermissionRequiredMixin, EvaluationEditMixin, CreateView):
+    permission_required = 'evaluations.add_evaluation'
     success_message = "%(name)s was created successfully"
 
 
-class EvaluationUpdateView(EvaluationEditMixin, UpdateView):
+class EvaluationUpdateView(PermissionRequiredMixin, EvaluationEditMixin, UpdateView):
+    permission_required = 'evaluations.change_evaluation'
     success_message = "%(name)s was updated successfully"
 
 
-class EvaluationOpenView(LoginRequiredMixin, View):
+class EvaluationOpenView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = 'evaluations.change_evaluation'
 
     @transaction.atomic
     def get(self, request, *args, **kwargs):
@@ -75,7 +82,8 @@ class EvaluationOpenView(LoginRequiredMixin, View):
         return redirect(reverse_lazy('evaluation_list'))
 
 
-class EvaluationFinishView(LoginRequiredMixin, View):
+class EvaluationFinishView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = 'evaluations.change_evaluation'
 
     def get(self, request, *args, **kwargs):
         evaluation = Evaluation.objects.get(id=kwargs['eval'])
@@ -92,11 +100,13 @@ class CategoryEditMixin(LoginRequiredMixin, SuccessMessageMixin):
     success_url = reverse_lazy('questionset_list')
 
 
-class CategoryAddView(CategoryEditMixin, CreateView):
+class CategoryAddView(PermissionRequiredMixin, CategoryEditMixin, CreateView):
+    permission_required = 'evaluations.add_category'
     success_message = "%(name)s was created successfully"
 
 
-class CategoryUpdateView(CategoryEditMixin, UpdateView):
+class CategoryUpdateView(PermissionRequiredMixin, CategoryEditMixin, UpdateView):
+    permission_required = 'evaluations.change_category'
     success_message = "%(name)s was updated successfully"
 
 
@@ -110,22 +120,26 @@ class QuestionEditMixin(QuestionMixin):
     success_url = reverse_lazy('questionset_list')
 
 
-class QuestionAddView(QuestionEditMixin, CreateView):
+class QuestionAddView(PermissionRequiredMixin, QuestionEditMixin, CreateView):
+    permission_required = 'evaluations.add_question'
     success_message = "%(title)s was created successfully"
 
 
-class QuestionUpdateView(QuestionEditMixin, UpdateView):
+class QuestionUpdateView(PermissionRequiredMixin, QuestionEditMixin, UpdateView):
+    permission_required = 'evaluations.change_question'
     success_message = "%(title)s was updated successfully"
 
 
-class QuestionListView(QuestionMixin, ListView):
+class QuestionListView(PermissionRequiredMixin, QuestionMixin, ListView):
+    permission_required = 'evaluations.change_question'
     template_name = 'evaluations/management/question/list.html'
     paginate_by = 10
 
 
-class KeySectionListView(LoginRequiredMixin, ListView):
+class KeySectionListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Key
     template_name = 'evaluations/management/key/list.html'
+    permission_required = 'evaluations.add_key'
 
     def get_queryset(self):
         qs = super(KeySectionListView, self).get_queryset()
