@@ -1,0 +1,38 @@
+{% extends "shared/management.html" %}
+{% load evaluation %}
+{% block page %}Evaluation{% endblock %}
+{% block pagecontent %}
+<div class="pull-right">
+<a href="{% url 'new_evaluation' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Evaluation</a>
+</div>
+<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>Evaluation</th>
+		<th>Semester</th>
+		<th>Question Set</th>
+		<th></th>
+        <th></th>
+		<th></th>
+	</tr>
+	</thead>
+	   {% for evaluation in object_list %}
+         <tr>
+           <td>{{ evaluation.name }}</td>
+           <td><a href="{% url 'semester_edit' evaluation.semester.id %}" type="button" class="btn btn-primary btn-xs">{{ evaluation.semester }}</a></td>
+           <td><a href="{% url 'questionset_edit' evaluation.question_set.id %}" type="button" class="btn btn-primary btn-xs">{{ evaluation.question_set }}</td>
+           <td>{% statuslink evaluation.status evaluation.id %}</td>
+           <td> {% if evaluation.special %}
+             <span class="label label-info">Special</span>
+             {% endif %}
+            </td>
+
+           <td><a href="{% url 'evaluation_edit' evaluation.id %}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+  		 </tr>
+       {% endfor %}
+	<tbody>
+		
+	</tbody>
+</table>
+    {% include "shared/pagination.html" %}
+{% endblock %}

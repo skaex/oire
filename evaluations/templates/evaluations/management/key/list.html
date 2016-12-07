@@ -1,0 +1,29 @@
+{% extends "shared/management.html" %}
+{% block page %}Keys{% endblock %}
+{% load key %}
+{% block pagecontent %}
+<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>Key</th>
+		<th>Status</th>
+	</tr>
+	</thead>
+	   {% for key in object_list %}
+         <tr>
+           <td><kbd>{{ key.value }}</kbd></td>
+
+           <td><span class="label {% keyslabelclass key.status %}">{{ key.get_status_display }}</span></td>
+           <td>{% if key.helper %}
+           		<span class="label label-info">Helper</span>
+           		{% endif %}
+           </td>
+           
+  		 </tr>
+       {% endfor %}
+	<tbody>
+		
+	</tbody>
+</table>
+    {% include "shared/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "shared/skeleton.html" %}
+{% block title %}{{ section.crn }}'s keys | FCE{% endblock %}
+{% load key %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-info">
+			  <div class="panel-body">
+			    <table class="table table-condensed">
+			    	<tbody>
+			    		<tr>
+			    			<td>Section</td>
+			    			<td>{{ section.course }}</td>
+			    		</tr>
+			    		<tr>
+			    			<td>Location</td>
+			    			<td>{{ section.location }}</td>
+			    		</tr>
+			    		<tr>
+			    			<td>Time</td>
+			    			<td>{{ section.time }}</td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+			  </div>
+			</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+			  <div class="panel-body">
+			    <table class="table table-condensed">
+			    	<tbody>
+			    		{% for key in keys %}
+			    		<tr>
+				           <td><kbd>{{ key.value }}</kbd></td>
+
+				           <td><span class="label {% keyslabelclass key.status %}">{{ key.get_status_display }}</span></td>
+				           <td>{% if key.helper %}
+				           		<span class="label label-info">Helper</span>
+				           		{% endif %}
+				           </td>
+				           
+				  		 </tr>
+				  		{% endfor %}
+			    	</tbody>
+			    </table>
+			  </div>
+			</div>
+    	</div>
+    </div>
+</div>
+{% endblock %}
