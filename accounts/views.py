@@ -18,12 +18,14 @@ class UserEditMixin(UserMixin):
     success_url = reverse_lazy('user_list')
 
 
-class UserListView(UserMixin, ListView):
+class UserListView(PermissionRequiredMixin, UserMixin, ListView):
+    permission_required = 'auth.change_user'
     template_name = 'accounts/management/user/list.html'
     paginate_by = 10
 
 
-class UserAddView(UserEditMixin, CreateView):
+class UserAddView(PermissionRequiredMixin, UserEditMixin, CreateView):
+    permission_required = 'auth.add_user'
     success_message = "%(email)s was created successfully"
     # Lets do some overide
     form_class = UserAddForm
@@ -34,6 +36,7 @@ class UserAddView(UserEditMixin, CreateView):
         return super(UserAddView, self).form_valid(form)
 
 
-class UserUpdateView(UserEditMixin, UpdateView):
+class UserUpdateView(PermissionRequiredMixin, UserEditMixin, UpdateView):
+    permission_required = 'auth.change_user'
     form_class = UserEditForm
     success_message = "%(email)s was updated successfully"

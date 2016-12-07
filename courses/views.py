@@ -17,22 +17,26 @@ class SchoolEditMixin(SchoolMixin):
     success_url = reverse_lazy('school_list')
 
 
-class SchoolListView(SchoolMixin, ListView):
+class SchoolListView(PermissionRequiredMixin, SchoolMixin, ListView):
+    permission_required = 'courses.change_school'
     template_name = 'courses/management/school/list.html'
     paginate_by = 10
 
 
-class SchoolAddView(SchoolEditMixin, CreateView):
+class SchoolAddView(PermissionRequiredMixin, SchoolEditMixin, CreateView):
+    permission_required = 'courses.add_school'
     success_message = "%(school)s was created successfully"
 
 
-class SchoolUpdateView(SchoolEditMixin, UpdateView):
+class SchoolUpdateView(PermissionRequiredMixin, SchoolEditMixin, UpdateView):
+    permission_required = 'courses.change_school'
     success_message = "%(school)s was updated successfully"
 
 
 # TODO: I don't think there should be a delete view here. I'll just leave
 # it in for debugging purposes.
-class SchoolDeleteView(SchoolMixin, DeleteView):
+class SchoolDeleteView(PermissionRequiredMixin, SchoolMixin, DeleteView):
+    permission_required = 'courses.delete_school'
     success_url = reverse_lazy('school_list')
     template_name = 'courses/management/school/delete.html'
     success_message = "%(school)s was deleted successfully"
@@ -48,21 +52,25 @@ class CourseEditMixin(CourseMixin, SuccessMessageMixin):
     success_url = reverse_lazy('course_list')
 
 
-class CourseListView(CourseMixin, ListView):
+class CourseListView(PermissionRequiredMixin, CourseMixin, ListView):
+    permission_required = 'courses.change_course'
     template_name = 'courses/management/course/list.html'
     paginate_by = 10
 
 
-class CourseAddView(CourseEditMixin, CreateView):
+class CourseAddView(PermissionRequiredMixin, CourseEditMixin, CreateView):
+    permission_required = 'courses.add_course'
     success_message = "%(code)s was deleted successfully"
 
 
-class CourseUpdateView(CourseEditMixin, UpdateView):
+class CourseUpdateView(PermissionRequiredMixin, CourseEditMixin, UpdateView):
+    permission_required = 'courses.change_course'
     success_message = "%(code)s was updated successfully"
 
 
 # TODO: I don't think there should be a delete view here too
-class CourseDeleteView(CourseMixin, DeleteView):
+class CourseDeleteView(PermissionRequiredMixin, CourseMixin, DeleteView):
+    permission_required = 'courses.delete_course'
     success_url = reverse_lazy('course_list')
     template_name = 'courses/management/course/delete.html'
     success_message = "%(code)s was deleted successfully"
