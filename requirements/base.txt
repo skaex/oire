@@ -15,3 +15,6 @@ pytz==2016.7
 
 # Images
 Pillow==3.4.2
+
+# Celery
+celery==4.0.0
