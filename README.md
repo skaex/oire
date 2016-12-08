@@ -9,8 +9,12 @@ This project is still in development.
 
 
 ## Requirements
-This is a django project therefore it requires python (3.4.x). All other requirements are found in the project's
-*requirements folder*
+The initial requirements for this project include:
+
+ * This is a django project therefore it requires python (3.4.x).
+ * The [RabbitMQ broker](https://www.rabbitmq.com/download.html).
+
+All other requirements are found in the project's *requirements folder*
 
 ## Quick start
 To set up this project on a machine *(for preview)*, you will need to:
@@ -32,6 +36,8 @@ To set up this project on a machine *(for preview)*, you will need to:
     * ``python manage.py createsuperuser``
 8. Runserver with
     * ``python manage.py runserver``
+    * ``rabbitmq-server`` (in another shell obviously)
+    * ``celery -A oire worker -l info`` (in another shell but the same environment/virtual environment.
 9. Go to ``http://localhost:8000/auth/login/`` and login.
 10. Please don't forget give us feedback in form of issues. :+1:
 
