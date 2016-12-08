@@ -34,14 +34,9 @@ class ReportListView(ListView, LoginRequiredMixin):
                 if group in groups:
                     return qs.filter(course__school__school=school.school)
         else:
-            page = page.split('-')
-            if page[-1] == 'dean':
-                schools = School.objects.all()
-                for school in schools:
-                    group = '%s Dean' % (school.school)
-                    if group in groups:
-                        return qs.filter(course__school__school=school.school)
-            elif page[-1] == 'special':
+            if page == 'dean':
+                return qs.filter(course__school__school=self.request.user.school)
+            elif page == 'special':
                 if 'Special' in groups:
                     return qs
 

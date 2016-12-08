@@ -63,11 +63,15 @@ class UserAddFormTest(TestCase):
     def test_email_has_right_css_class(self):
         self.assertEqual(self.form.fields['email'].widget.attrs['class'], 'form-control')
 
+    def test_school_has_right_css_class(self):
+        self.assertEqual(self.form.fields['school'].widget.attrs['class'], 'form-control')
+
 
 class UserEditFormTest(UserAddFormTest):
     def setUp(self):
         self.form = UserEditForm()
 
+    # I can see this is redundant
     def test_user_permissions_field_exists_in_form(self):
         self.assertTrue('user_permissions' in self.form.fields)
 
