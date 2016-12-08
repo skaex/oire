@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import password_validation
-from django.contrib.auth.models import User
+from .models import User
 
 
 class OireAuthenticationForm(AuthenticationForm):
@@ -69,7 +69,7 @@ class OireSetPasswordForm(SetPasswordForm):
 class UserAddForm(forms.models.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'groups')
+        fields = ('first_name', 'last_name', 'email', 'school', 'groups')
         widgets = {
             'first_name': forms.fields.TextInput(attrs={
                 'placeholder': 'Enter a first name',
@@ -82,6 +82,9 @@ class UserAddForm(forms.models.ModelForm):
             'email': forms.fields.EmailInput(attrs={
                 'placeholder': 'Enter an email',
                 'class': 'form-control',
+            }),
+            'school': forms.fields.Select(attrs={
+                'class': 'form-control'
             }),
             'groups': forms.fields.SelectMultiple(attrs={
                 'class': 'form-control',

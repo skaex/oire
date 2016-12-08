@@ -10,6 +10,7 @@
 	<tr>
 		<th>Name(s)</th>
 		<th>Email</th>
+        <th>School</th>
 		<th>Username</th>
 		<th>Group(s)</th>
 		<th>Last Login</th>
@@ -20,6 +21,7 @@
          <tr>
            <td>{{ user.first_name }} {{ user.last_name }}</td>
            <td>{{ user.email }}</td>
+           <td>{{ user.school.school }}</td>
            <td>{{ user.username }}</td>
            <td>{% for group in user.groups.all %}
            			<span class="label label-info">{{ group.name }}</span>

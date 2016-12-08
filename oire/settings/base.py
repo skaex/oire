@@ -138,6 +138,10 @@ STATICFILES_DIRS = (
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('report_list')
 
+# Overriding Auth User model
+
+AUTH_USER_MODEL = 'accounts.User'
+
 # Tweaking Auth Backend
 AUTHENTICATION_BACKENDS = (
     'accounts.authentication.EmailAuthBackend',

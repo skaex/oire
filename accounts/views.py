@@ -4,8 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.hashers import make_password
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.models import User
-from .models import DEFAULT_USER_PASSWORD
+from .models import DEFAULT_USER_PASSWORD, User
 from .forms import UserAddForm, UserEditForm
 
 
