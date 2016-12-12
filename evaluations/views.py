@@ -140,6 +140,7 @@ class KeySectionListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Key
     template_name = 'evaluations/management/key/list.html'
     permission_required = 'evaluations.add_key'
+    paginate_by = 10
 
     def get_queryset(self):
         qs = super(KeySectionListView, self).get_queryset()

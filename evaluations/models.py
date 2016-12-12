@@ -29,6 +29,8 @@ class Evaluation(models.Model):
 
 
 class Key(models.Model):
+    HELPER_KEY_LENGTH = 6
+    KEY_LENGTH = 5
     KEY_STATUSES = (
         ('FRESH', 'Fresh'),
         ('GIVEN_OUT', 'Given out'),
