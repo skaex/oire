@@ -9,6 +9,7 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from .models import QuestionSet, Evaluation, Question, Category, Key
 from .forms import QuestionSetForm, EvaluationForm, CategoryForm, QuestionForm, EvaluateForm
+from .tasks import open_all_sections, close_all_sections
 from sections.models import Section
 
 
@@ -87,9 +88,20 @@ class EvaluationFinishView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         evaluation = Evaluation.objects.get(id=kwargs['eval'])
+        close_all_sections.delay(evaluation.id)
         evaluation.status = Evaluation.STATUSES[2][0]
         evaluation.save()
         messages.success(request, '%s was finished successfully' % (evaluation.name))
+        return redirect(reverse_lazy('evaluation_list'))
+
+
+class EvaluationOpenAllSectionsView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = 'evaluations.change_section'
+
+    def get(self, request, *args, **kwargs):
+        evaluation = Evaluation.objects.get(id=kwargs['eval'])
+        open_all_sections.delay(evaluation.id)
+        messages.success(request, '%s sections opening started successfully' % (evaluation.name))
         return redirect(reverse_lazy('evaluation_list'))
 
 

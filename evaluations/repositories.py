@@ -1,6 +1,7 @@
 from django.utils.crypto import get_random_string
 from django.db import transaction
-from evaluations.models import Evaluation, Key
+
+from .models import Evaluation, Key
 
 
 class KeyRepository:
@@ -46,3 +47,4 @@ class KeyRepository:
                 return False
             else:
                 return True
+

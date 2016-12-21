@@ -21,15 +21,17 @@ class ReportListView(ListView, LoginRequiredMixin):
         try:
             page = self.request.GET['role']
         except Exception:
+
             if 'Faculty' in groups:
                 return qs.filter(instructors=self.request.user)
             elif 'Special' in groups:
                 return qs
             elif 'Dean' in groups:
-                qs.filter(course__school__school=self.request.user.school)
+                return qs.filter(course__school__school=self.request.user.school)
         else:
             if page == 'dean':
-                return qs.filter(course__school__school=self.request.user.school)
+                if 'Dean' in groups:
+                    return qs.filter(course__school__school=self.request.user.school)
             elif page == 'special':
                 if 'Special' in groups:
                     return qs
@@ -44,7 +46,7 @@ class ReportDetailView(View, LoginRequiredMixin):
         if self.request.user.id not in section.instructors.values_list('id', flat=True)\
                 and 'Special' not in groups and 'Dean' not in groups:
             return page_not_found(request)
-        if 'Dean' in groups and self.request.user.school != section.school:
+        if 'Dean' in groups and self.request.user.school != section.course.school:
             return page_not_found(request)
 
         evaluation = Evaluation.objects.get(id=self.kwargs['evaluation'])
