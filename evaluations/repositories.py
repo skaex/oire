@@ -1,40 +1,42 @@
 from django.utils.crypto import get_random_string
-from evaluations.models import Evaluation, Key
+from django.db import transaction
+
+from .models import Evaluation, Key
 
 
 class KeyRepository:
+    MAX_ATTEMPTS = 3
+
+    @transaction.atomic
     def create_keys(self, section):
+        sid = transaction.savepoint()
         evaluation = Evaluation.objects.filter(semester=section.semester.id).filter(status=Evaluation.STATUSES[0][0])
         if evaluation:
-            created_keys = 0
             attempts = 0
-            while created_keys < section.enrolled and attempts < 5:
-                # Key.objects.create(value=get_random_string(length=5), evaluation=evaluation[0], section=section)
-                # created_keys += 1
-                # attempts += 1
+            created = 0
+            while created <= section.enrolled:
                 try:
-                    Key.objects.create(value=get_random_string(length=5), evaluation=evaluation[0], section=section)
+                    if created < section.enrolled:
+                        Key.objects.create(
+                            value=get_random_string(length=Key.KEY_LENGTH),
+                            evaluation=evaluation[0],
+                            section=section
+                        )
+                    else:
+                        Key.objects.create(
+                            value=get_random_string(length=Key.HELPER_KEY_LENGTH),
+                            evaluation=evaluation[0],
+                            section=section,
+                            helper=True
+                        )
+                    created += 1
                 except Exception:
-                    pass
-                    print('Flop!')
+                    if attempts >= self.MAX_ATTEMPTS:
+                        transaction.savepoint_rollback(sid)
+                        return False
                     attempts += 1
-                # I'll need to do more here.
-                else:
-                    created_keys += 1
-
-            # Creating helper key
-            attempts = 0
-            while created_keys <= section.enrolled and attempts < 5:
-                try:
-                    Key.objects.create(value=get_random_string(length=6), evaluation=evaluation[0], section=section,
-                                       helper=True)
-                except Exception:
-                    pass
-                    print('Flop!')
-                    attempts += 1
-                # Come and console the system
-                else:
-                    created_keys += 1
+            transaction.savepoint_commit(sid)
+            return True
 
     def delete_keys(self, section):
         evaluation = Evaluation.objects.filter(semester=section.semester.id).filter(status=Evaluation.STATUSES[0][0])
@@ -42,5 +44,7 @@ class KeyRepository:
             try:
                 Key.objects.filter(section=section.id, evaluation=evaluation[0]).delete()
             except Exception:
-                pass
-                print('Flop!')
+                return False
+            else:
+                return True
+

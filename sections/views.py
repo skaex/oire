@@ -9,7 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .models import Semester, Section
 from evaluations.models import Key
 from sections.forms import SemesterForm, SectionForm
-from evaluations.repositories import KeyRepository
+from sections.repositories import SectionRepository
 
 
 class SemesterMixin(LoginRequiredMixin, SuccessMessageMixin):
@@ -93,12 +93,11 @@ class SectionOpenView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         section = Section.objects.get(id=kwargs['section'])
-        key_repo = KeyRepository()
-        if section.status == Section.STATUSES[1][0]:
-            key_repo.create_keys(section)
-            section.status = Section.STATUSES[0][0]
-        section.save()
-        messages.success(request, '%s opened successfully' % (section.crn))
+        repository = SectionRepository()
+        if repository.open_section(section):
+            messages.success(request, '%s opened successfully' % (section.crn))
+        else:
+            messages.error(request, '%s was not opened successfully' % (section.crn))
         return redirect(reverse_lazy('section_list'))
 
 
@@ -107,19 +106,11 @@ class SectionCloseView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         section = Section.objects.get(id=kwargs['section'])
-        if section.status == Section.STATUSES[0][0]:
-            key_repo = KeyRepository()
-            key_repo.delete_keys(section)
-            section.status = Section.STATUSES[1][0]
-            messages.success(request, '%s locked successfully' % (section.crn))
-        elif section.status == Section.STATUSES[2][0]:
-            key_repo = KeyRepository()
-            key_repo.delete_keys(section)
-            section.status = Section.STATUSES[3][0]
-            messages.success(request, '%s closed successfully' % (section.crn))
+        repository = SectionRepository()
+        if repository.close_section(section):
+            messages.success(request, 'Operation on %s was successfully' % (section.crn))
         else:
-            section.status = section.status
-        section.save()
+            messages.error(request, 'Operation on %s was not successfully' % (section.crn))
         return redirect(reverse_lazy('section_list'))
 
 

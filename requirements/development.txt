@@ -1,7 +1,7 @@
 # Local development dependencies go here
 -r base.txt
 
-factory_boy==2.7.0
+factory_boy
 
 
 django-braces==1.10.0

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 import environ
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.messages import constants as message_constants
 
 # Set up the environ
 env = environ.Env()
@@ -153,3 +154,5 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 FIXTURE_DIRS = [
     str(SHARED_DIR.path('fixtures')),
 ]
+
+MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
