@@ -1,0 +1,52 @@
+{% extends "shared/management.html" %}
+{% load presections %}
+{% block page %}PreSections{% endblock %}
+{% block pagecontent %}
+
+<div class="pull-right">
+<a href="{% url 'load_presections' %}" type="button" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Load presections</a>
+{% autoescape off %}{% load_button %}{% endautoescape %}
+<a href="{% url 'new_presection' %}" type="button" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add presection</a>
+</div>
+<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>CRN</th>
+		<th>Course</th>
+		<th>Class Time</th>
+		<th>Location</th>
+		<th>Enrolled</th>
+		<th>Semester</th>
+		<th>Instructor(s)</th>
+		<th></th>
+		<th></th>
+        <th></th>
+        <th></th>
+		<th></th>
+	</tr>
+	</thead>
+	   {% for presection in object_list %}
+         <tr>
+           <td>{{ presection.crn }}</td>
+           <td>{{ presection.course }}</td>
+           <td>{{ presection.time }}</td>
+           <td>{{ presection.location }}</td>
+           <td>{{ presection.enrolled }}</td>
+           <td>{{ presection.semester }}</td>
+           <td>{{ presection.instructors }}</td>
+           <td>{{ presection.error_column }}</td>
+             <td>{{ presection.error_message }}</td>
+
+             <td><a href="{% url 'presection_refresh' presection.id %}" ><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></td>
+           <td><a href="{% url 'presection_edit' presection.id %}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+           <td><a href="{% url 'presection_delete' presection.id %}" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+
+  		 </tr>
+       {% endfor %}
+
+	<tbody>
+
+	</tbody>
+</table>
+    {% include "shared/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "shared/management.html" %}
+{% block page %}PreSection Loading Form{% endblock %}
+{% load staticfiles %}
+{% block pagecontent %}
+	{% if form.errors %}
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Oh snap! </strong>Whoops! Change a few things up and try submitting again.
+</div>
+{% endif %}
+<div class="panel panel-default">
+<div class="panel-body">
+<form class="form-horizontal" action="." method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" >Let's go</button>
+ </div>
+</form>
+    <span class="pull-right">You can find a sample upload file <a href="{% static '/files/sample_upload.xls' %}"> here.</a></span>
+</div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 import factory
 from courses.tests.factories import CourseFactory
-from ..models import Semester, Section
+from ..models import Semester, Section, PreSection
 
 
 class SemesterFactory(factory.django.DjangoModelFactory):
@@ -23,3 +23,16 @@ class SectionFactory(factory.django.DjangoModelFactory):
     location = factory.Sequence(lambda n: 'location-{0}'.format(n))
     enrolled = factory.Sequence(lambda n: '{0}'.format(n))
     semester = factory.SubFactory(SemesterFactory)
+
+
+class PreSectionFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = PreSection
+
+    crn = factory.Sequence(lambda n: '{0}'.format(n))
+    course = factory.SubFactory(CourseFactory)
+    time = factory.Sequence(lambda n: 'time-{0}'.format(n))
+    location = factory.Sequence(lambda n: 'location-{0}'.format(n))
+    enrolled = factory.Sequence(lambda n: '{0}'.format(n))
+    semester = factory.Sequence(lambda n: 'semester-{0}'.format(n))
