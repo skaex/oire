@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from ..models import Semester, Section
-from .factories import SemesterFactory, SectionFactory
+from ..models import Semester, Section, PreSection
+from .factories import SemesterFactory, SectionFactory, PreSectionFactory
 
 
 class SemesterModelTest(TestCase):
@@ -14,6 +14,7 @@ class SemesterModelTest(TestCase):
 
     # Don't you wonder what order the ORM gets these objects?
     #
+
     def test_string_representation(self):
         semester = self.factory.build()
         self.assertEqual(str(semester), '%s %s' % (semester.season, semester.year))
@@ -37,6 +38,19 @@ class SectionModelTest(TestCase):
         section = self.factory.create()
         self.assertEqual(list(Section.objects.all()), [section, ])
 
-    def test_string_respresentation_of_section(self):
+    def test_string_representation_of_section(self):
         section = self.factory.create()
         self.assertEqual(str(section), section.crn)
+
+
+class PreSectionModelTest(TestCase):
+    def setUp(self):
+        self.factory = PreSectionFactory
+
+    def test_can_create_pre_section(self):
+        pre_section = self.factory.create()
+        self.assertEqual(list(PreSection.objects.all()), [pre_section, ])
+
+    def test_string_representation_of_pre_section(self):
+        pre_section = self.factory.create()
+        self.assertEqual(str(pre_section), 'PRE-SECTION-%s' %(pre_section.crn))

@@ -1,0 +1,12 @@
+{% extends "shared/management.html" %}
+{% block page %}Delete PreSection{% endblock %}
+{% block pagecontent %}
+<div class="well">
+	<form action="" method="post">
+	 {% csrf_token %}
+	 <p>Are you sure you want to delete "PRE-SECTION-{{ object.crn }}"?</p>
+	 <button type="submit" class="btn btn-success">Yes</button>
+	 <a class="btn btn-danger" href="{% url 'semester_list' %}">No</a>
+	</form>
+</div>
+{% endblock %}

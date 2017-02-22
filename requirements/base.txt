@@ -18,3 +18,9 @@ Pillow==3.4.2
 
 # Celery
 celery==4.0.0
+
+# Django Excel
+django-excel
+pyexcel-xls
+pyexcel-xlsx
+pyexcel-io

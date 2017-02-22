@@ -156,3 +156,6 @@ FIXTURE_DIRS = [
 ]
 
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")

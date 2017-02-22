@@ -11,7 +11,7 @@
 		<th>Year</th>
 		<th></th>
 		<th></th>
-		<th></th>
+
 	</tr>
 	</thead>
 	   {% for semester in object_list %}
@@ -25,6 +25,7 @@
            	<a href="#" type="button" class="btn btn-danger btn-xs">No Evaluations</a>
            {% endfor %}
            </td>
+
            <td><a href="{% url 'semester_edit' semester.id %}" ><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
            <!-- <td><a href="{% url 'semester_delete' semester.id %}" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td> -->
   		 </tr>

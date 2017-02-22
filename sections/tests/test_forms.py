@@ -2,7 +2,8 @@ from django.test import TestCase
 from ..forms import (
     EMPTY_SEMESTER_YEAR_ERROR, EMPTY_SEMESTER_SEASON_ERROR,
     SemesterForm,
-    SectionForm
+    SectionForm,
+    PreSectionForm
 )
 
 
@@ -34,6 +35,16 @@ class SemesterFormTest(TestCase):
 class SectionFormTest(TestCase):
     def test_form_has_placeholders_and_css_classes(self):
         form = SectionForm()
+        self.assertIn('placeholder="Enter the CRN"', form.as_p())
+        self.assertIn('placeholder="Enter the class time', form.as_p())
+        self.assertIn('placeholder="Enter the class location', form.as_p())
+        self.assertIn('placeholder="Enter the class enrollment', form.as_p())
+        self.assertIn('class="form-control"', form.as_p())
+
+
+class PreSectionFormTest(TestCase):
+    def test_form_has_placeholders_and_css_classes(self):
+        form = PreSectionForm()
         self.assertIn('placeholder="Enter the CRN"', form.as_p())
         self.assertIn('placeholder="Enter the class time', form.as_p())
         self.assertIn('placeholder="Enter the class location', form.as_p())
