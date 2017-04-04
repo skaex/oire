@@ -36,3 +36,12 @@ body {
 .main {
   margin-top: 50px;
 }
+
+.landing .btn {
+  text-transform: none;
+}
+
+.landing .btn:focus {
+  border-color: #000000;
+  outline: none
+}

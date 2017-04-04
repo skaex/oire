@@ -2,8 +2,9 @@
 <!doctype html>
 <html>
 <head>
+    {% block stylesheets %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-{#    <link rel="stylesheet" href="{% static 'courses/css/main.css' %}">#}
+    {% endblock %}
     <title>{% block title %} FCE {% endblock %}</title>
 </head>
 <body>
