@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import User
 
 
-class UserAdmin(admin.ModelAdmin):
-    fields = ('first_name', 'last_name', 'password', 'username', 'school', 'groups')
-    list_display = ['first_name', 'last_name',  'username', 'school']
+class MyUserAdmin(UserAdmin):
+    list_display = ['username', 'first_name', 'last_name', 'school']
 
-admin.site.register(User, UserAdmin)
+
+admin.site.register(User, MyUserAdmin)
