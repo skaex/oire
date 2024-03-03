@@ -1,5 +1,5 @@
 {% extends "shared/skeleton.html" %}
-{% load staticfiles %}
+{% load static %}
 {% load reports %}
 {% block title %}Report | {{ section.crn }}{% endblock %}
 {% block content %}
@@ -53,14 +53,14 @@
     		<tr>
     			<td><b>{{ question.title }}</b>: {{ question.description }}</td>
                 {% for response in responses %}
-                    {% ifequal response.question question %}
+                    {% if response.question == question %}
                         <td>{{ response.one }}</td>
                         <td>{{ response.two }}</td>
                         <td>{{ response.three }}</td>
                         <td>{{ response.four }}</td>
                         <td>{{ response.five }}</td>
                         <td>{% response_average response %}</td>
-                    {% endifequal %}
+                    {% endif %}
                 {% endfor %}
     		</tr>
     		{% endfor %}
