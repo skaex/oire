@@ -38,9 +38,17 @@ To set up this project on a machine **(for preview/development only)**, you will
 10. Login with the Goat.
 11. Good luck :tada:
 
-
-
 Please don't forget give us feedback in form of issues. :+1:
+
+## Installation (for production)
+Ensure, you have setup this project for preview to be conversant with the requirements and other intricacies for this project.
+
+
+To install this project, you can follow [the procedures in the guide.](https://realpython.com/django-nginx-gunicorn/) Please read through to understand it all before attempting the installation.
+
+Alternatively, you can follow the procedures for deploying a [django application to production](https://docs.djangoproject.com/en/5.0/howto/deployment/).
+
+
 
 
 
