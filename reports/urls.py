@@ -1,17 +1,17 @@
-from django.conf.urls import url
+from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    url(r'^$',
+    re_path(r'^$',
         views.ReportListView.as_view(),
         name='report_list'),
-    url(r'^evaluate/sections/(?P<section>\d+)/$',
+    re_path(r'^evaluate/sections/(?P<section>\d+)/$',
         views.EvaluationSubmitView.as_view(),
         name='submit_evaluation'),
-    url(r'^credits/$',
+    re_path(r'^credits/$',
         views.CreditsView.as_view(),
         name='credits'),
-    url(r'^sections/(?P<section>\d+)/evaluations/(?P<evaluation>\d+)/$',
+    re_path(r'^sections/(?P<section>\d+)/evaluations/(?P<evaluation>\d+)/$',
         views.ReportDetailView.as_view(),
         name='detail_report'),
 

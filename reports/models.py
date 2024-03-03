@@ -9,9 +9,9 @@ class Response(models.Model):
     three = models.IntegerField(default=0)
     four = models.IntegerField(default=0)
     five = models.IntegerField(default=0)
-    section = models.ForeignKey(Section)
-    evaluation = models.ForeignKey(Evaluation)
-    question = models.ForeignKey(Question)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self):
         return str([self.one, self.two, self.three, self.four, self.five])
@@ -19,8 +19,8 @@ class Response(models.Model):
 
 class Comment(models.Model):
     comment = models.TextField()
-    section = models.ForeignKey(Section)
-    evaluation = models.ForeignKey(Evaluation)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.comment

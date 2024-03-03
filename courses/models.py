@@ -13,7 +13,7 @@ class Course(models.Model):
     code = models.CharField(max_length=10)
     title = models.CharField(max_length=250)
     description = models.TextField(blank=True)
-    school = models.ForeignKey(School)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.code

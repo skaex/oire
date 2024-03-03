@@ -22,7 +22,7 @@ DEBUG = env.bool('DJANGO_DEBUG', default=True)
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='y7v%p_9i9y(9rqm1r3r2uko*ei_j*8vgjtpoyzccqw457j805*')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='django-insecure-o+a3n*149j4wu4=3)27+vi(o-xkczpjui%2=-nw&fr8a-u33y2')
 
 # Email Config
 # ------------------------------------------------------------------------------

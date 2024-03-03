@@ -8,4 +8,12 @@ TESTING_PASSWORD = 'password'
 
 
 class User(AbstractUser):
-    school = models.ForeignKey(School, null=True)
+    email = models.EmailField(
+        verbose_name="email address",
+        max_length=255,
+        unique=True,
+    )
+    school = models.ForeignKey(School, null=True, blank=True, on_delete=models.SET_NULL)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["date_of_birth"]

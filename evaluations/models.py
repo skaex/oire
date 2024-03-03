@@ -20,8 +20,8 @@ class Evaluation(models.Model):
                               choices=STATUSES,
                               default=STATUSES[1][0])
     name = models.CharField(max_length=250)
-    question_set = models.ForeignKey(QuestionSet)
-    semester = models.ForeignKey(Semester)
+    question_set = models.ForeignKey(QuestionSet, on_delete=models.CASCADE)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     special = models.BooleanField(default=False)
 
     def __str__(self):
@@ -37,8 +37,8 @@ class Key(models.Model):
         ('USED', 'Used'),
     )
     value = models.CharField(max_length=10, unique=True)
-    section = models.ForeignKey(Section)
-    evaluation = models.ForeignKey(Evaluation)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=KEY_STATUSES, default=KEY_STATUSES[0][0])
     helper = models.BooleanField(default=False)
 
@@ -48,7 +48,7 @@ class Key(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    question_set = models.ForeignKey(QuestionSet)
+    question_set = models.ForeignKey(QuestionSet, on_delete=models.CASCADE)
 
     def __str__(self):
         return '%s (%s)' %(self.name, self.question_set.name)
@@ -58,7 +58,7 @@ class Category(models.Model):
 
 
 class Question(models.Model):
-    category = models.ForeignKey(Category, related_name='category_questions')
+    category = models.ForeignKey(Category, related_name='category_questions', on_delete=models.CASCADE)
     order = OrderField(blank=True, for_fields=['category'])
     title = models.CharField(max_length=50)
     description = models.TextField()

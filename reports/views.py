@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.db import transaction
 from django.contrib import messages
 from django.views.defaults import page_not_found
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView
 from django.views.generic.list import ListView
 from braces.views import LoginRequiredMixin
