@@ -23,7 +23,7 @@ class Section(models.Model):
         ('DONE', 'Done'),
     )
     crn = models.CharField(max_length=20)
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     time = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
     status = models.CharField(max_length=15,
@@ -32,7 +32,7 @@ class Section(models.Model):
     instructors = models.ManyToManyField(
         User)
     enrolled = models.IntegerField()
-    semester = models.ForeignKey(Semester)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.crn

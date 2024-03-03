@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import View
 from django.views.generic.list import ListView
