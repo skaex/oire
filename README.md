@@ -19,24 +19,26 @@ All other requirements are found in the project's *[Requirements file.](requirem
 To set up this project on a machine **(for preview/development only)**, you will need to:
 
 1. Ensure a similar Python version (say 3.11.5) is installed on your machine.
-2. (Optional) You may want to create a separate ``virtualenv``
+2. (Optional) You may want to create a separate virtual environment
+    * You may use [pyenv](https://github.com/pyenv/pyenv) along side [pyenv virtualenv](https://github.com/pyenv/pyenv-virtualenv).
+    * Create the virtual env with `pyenv virtualenv 3.11.5 oire`
 3. Download and unzip or clone the project.
 4. ``cd`` into the project directory.
-3. Install the requirements with
+5. Install the requirements with
     * ``pip install -r requirements.txt``
-4. Set up the database. You can do it how you want or follow [this guide](docs/DATABASE_SETUP.md).
-5. Copy example environment file with
+6. Set up the database. You can do it how you want or follow [this guide](docs/DATABASE_SETUP.md).
+7. Copy example environment file with
     * ``cp env.example .env``
-6. Create Goat (Test User) with
+8. Create Goat (Test User) with
     * ``python manage.py creategoat``
-7. Runserver with
+9.  Runserver with
     * ``python manage.py runserver``
     * ``rabbitmq-server`` (in another shell obviously)
     * ``celery -A oire worker -l info`` (in another shell but the same environment/virtual environment.
-8. Go to ``http://localhost:8000/``.
-9.  Click on **Faculty Course Evaluation**.
-10. Login with the Goat.
-11. Good luck :tada:
+10. Go to ``http://localhost:8000/``.
+11. Click on **Faculty Course Evaluation**.
+12. Login with the Goat.
+13. Good luck :tada:
 
 Please don't forget give us feedback in form of issues. :+1:
 
