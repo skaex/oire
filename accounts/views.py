@@ -1,12 +1,18 @@
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import LoginView, PasswordResetView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from .models import DEFAULT_USER_PASSWORD, User
-from .forms import UserAddForm, UserEditForm
+from .forms import UserAddForm, UserEditForm, OireAuthenticationForm, OirePasswordResetForm
 
+class OireLoginView(LoginView):
+    authentication_form = OireAuthenticationForm
+
+class OirePasswordResetView(PasswordResetView):
+    form_class = OirePasswordResetForm
 
 class UserMixin(LoginRequiredMixin, SuccessMessageMixin):
     model = User

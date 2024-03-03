@@ -46,7 +46,6 @@ class OirePasswordResetForm(PasswordResetForm):
         'autofocus': ''
     }))
 
-
 class OireSetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(
         label="New password",

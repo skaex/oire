@@ -1,52 +1,51 @@
-from django.conf.urls import url
+from django.urls import re_path
 from django.contrib.auth import views as auth_views
 from . import views
-from .forms import OireAuthenticationForm, OirePasswordChangeForm, OirePasswordResetForm, OireSetPasswordForm
+from .forms import OirePasswordChangeForm, OirePasswordResetForm, OireSetPasswordForm
 
 urlpatterns = [
     # User management urls
-    url(r'^users/$',
+    re_path(r'^users/$',
         views.UserListView.as_view(),
         name='user_list'),
-    url(r'^users/new/$',
+    re_path(r'^users/new/$',
         views.UserAddView.as_view(),
         name='new_user'),
-    url(r'^users/(?P<pk>\d+)/edit/$',
+    re_path(r'^users/(?P<pk>\d+)/edit/$',
            views.UserUpdateView.as_view(),
            name='user_edit'),
 
     # Login and logout urls
-    url(r'^login/$',
-        auth_views.login,
-        {'authentication_form': OireAuthenticationForm},
+    re_path(r'^login/$',
+        views.OireLoginView.as_view(),
         name='login'),
-    url(r'^logout/$',
-        auth_views.logout,
+
+    re_path(r'^logout/$',
+        auth_views.LogoutView.as_view(),
         name='logout'),
 
     # Change password urls
-    url(r'^password-change/$',
-        auth_views.password_change,
+    re_path(r'^password-change/$',
+        auth_views.PasswordChangeView.as_view(),
         {'password_change_form': OirePasswordChangeForm},
         name='password_change'),
-    url(r'^password-change/done/$',
-        auth_views.password_change_done,
+    re_path(r'^password-change/done/$',
+        auth_views.PasswordChangeDoneView.as_view(),
         name='password_change_done'),
 
     # Reset password urls
-    url(r'^password-reset/$',
-        auth_views.password_reset,
-        {'password_reset_form': OirePasswordResetForm},
+    re_path(r'^password-reset/$',
+        views.OirePasswordResetView.as_view(),
         name='password_reset'),
-    url(r'^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
-        auth_views.password_reset_confirm,
+    re_path(r'^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
+        auth_views.PasswordResetConfirmView.as_view(),
         {'set_password_form': OireSetPasswordForm},
         name='password_reset_confirm'),
-    url(r'^password-reset/done/$',
-        auth_views.password_reset_done,
+    re_path(r'^password-reset/done/$',
+        auth_views.PasswordResetDoneView.as_view(),
         name='password_reset_done'),
-    url(r'^password-reset/complete/$',
-        auth_views.password_reset_complete,
+    re_path(r'^password-reset/complete/$',
+        auth_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete'),
 
 ]
