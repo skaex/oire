@@ -15,14 +15,15 @@ import environ
 from django.urls import reverse_lazy
 from django.contrib.messages import constants as message_constants
 
-# Set up the environ
-env = environ.Env()
-env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = environ.Path(__file__) - 3
 SHARED_DIR = ROOT_DIR.path('oire')
+
+# Set up the environ
+env = environ.Env()
+env.read_env(ROOT_DIR('.env'))
 
 
 ALLOWED_HOSTS = []
